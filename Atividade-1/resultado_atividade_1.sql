@@ -32,9 +32,48 @@ select c.nome_cantor, count(g.cod_gravadora) as num_gravadoras
 	having count(g.cod_gravadora) = 
 		(select max(gravacoes.total)
 			from (
-				select count(cod_cantor) as total from gravacao group by cod_gravacao
+				select count(cod_gravadora) as total from gravacao group by cod_cantor
 			) as gravacoes
 		);
+
+-- Exercicio 3	
+select g.cod_cantor, avg(m.duracao) as media_duracao 
+	from gravacao as g, musica as m
+	where g.cod_musica = m.cod_musica
+ 	group by g.cod_cantor;
+
+-- Exercicio 4
+-- Query statement
+select nome_cantor from cantor where cantor.cod_cantor not in (
+	select cod_cantor from gravacao where gravacao.cod_gravadora = (
+		select cod_gravadora from gravadora where nome_gravadora = 'Sony'
+	)
+);
+-- Query result:
+-- +---------------+
+-- | nome_cantor   |
+-- +---------------+
+-- | Djavan        |
+-- +---------------+
+-- | Laura Pausini |
+-- +---------------+
+-- | Roberto Leal  |
+-- +---------------+
+-- | The Corrs     |
+-- +---------------+
+-- | Legi�o Urbana |
+-- +---------------+
+-- | Cazuza        |
+-- +---------------+
+-- | Tom Jobim     |
+-- +---------------+
+
+-- Exercicio 5:
+-- Query statement: Falta incluir a coluna para exibir a data
+select distinct cantor.nome_cantor as cantor, musica.titulo as musica
+	from cantor, musica
+	where cantor.cod_cantor in (select cod_cantor from gravacao where date_part('YEAR', data_gravacao) = 2004)
+	and musica.cod_musica in (select cod_musica from gravacao where date_part('YEAR', data_gravacao) = 2004);
 
 -- Exercicio 7
 -- Query statement:
