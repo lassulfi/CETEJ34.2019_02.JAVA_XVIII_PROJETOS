@@ -69,11 +69,28 @@ select nome_cantor from cantor where cantor.cod_cantor not in (
 -- +---------------+
 
 -- Exercicio 5:
--- Query statement: Falta incluir a coluna para exibir a data
-select distinct cantor.nome_cantor as cantor, musica.titulo as musica
-	from cantor, musica
+-- Query statement:
+select distinct cantor.nome_cantor as cantor, musica.titulo as musica, gravacao.data_gravacao
+	from cantor, musica natural inner join gravacao
 	where cantor.cod_cantor in (select cod_cantor from gravacao where date_part('YEAR', data_gravacao) = 2004)
 	and musica.cod_musica in (select cod_musica from gravacao where date_part('YEAR', data_gravacao) = 2004);
+-- Query result:
+-- +-------------+-----------------------------+---------------+
+-- | cantor      | musica                      | data_gravacao |
+-- +-------------+-----------------------------+---------------+
+-- | Coldplay    | A Rush of Blood to the head | 2004-08-30    |
+-- +-------------+-----------------------------+---------------+
+-- | Coldplay    | Clocks                      | 2004-10-01    |
+-- +-------------+-----------------------------+---------------+
+-- | Coldplay    | Green eyes                  | 2004-09-20    |
+-- +-------------+-----------------------------+---------------+
+-- | Coldplay    | Politik                     | 2004-09-12    |
+-- +-------------+-----------------------------+---------------+
+
+-- Exercicio 6:
+select distinct cantor.nome_cantor, gravacao.data_gravacao as data_ultima_gravacao
+	from cantor natural inner join gravacao
+	order by gravacao.data_gravacao desc;
 
 -- Exercicio 7
 -- Query statement:
@@ -84,7 +101,7 @@ select distinct p.nome_pessoa,
 	from pessoa as p, fone as f where p.cod_pessoa = f.cod_pessoa;
 -- Query result:
 -- +-------------+------------------+----------------+-----------+
--- | nome_pessoa | fone_residencial | fone_comercial | celular  |
+-- | nome_pessoa | fone_residencial | fone_comercial | celular   |
 -- +-------------+------------------+----------------+-----------+
 -- | Ana         | 3333-1111        | 4444-1111      | 9999-1111 |
 -- +-------------+------------------+----------------+-----------+
