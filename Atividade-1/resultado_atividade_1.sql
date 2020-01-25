@@ -25,16 +25,15 @@ select c.nome_cantor, count(g.cod_cantor) as num_gravacoes
 -- +---------------+---------------+ 
 
 -- Exericio 2
-select c.nome_cantor, count(g.cod_gravadora) as num_gravadoras
-	from cantor as c, gravacao as g
+select c.nome_cantor, count(g.cod_cantor) as num_gravadora 
+	from cantor as c, gravacao as g 
 	where c.cod_cantor = g.cod_cantor
 	group by c.nome_cantor
-	having count(g.cod_gravadora) = 
-		(select max(gravacoes.total)
-			from (
-				select count(cod_gravadora) as total from gravacao group by cod_cantor
-			) as gravacoes
-		);
+	having count(g.cod_cantor) = (select max(contagem.total) from (
+		select count(gravacoes.cod_cantor) as total from (
+			select distinct cod_gravadora, cod_cantor from gravacao
+		) as gravacoes group by gravacoes.cod_cantor
+	) as contagem);
 
 -- Exercicio 3	
 select g.cod_cantor, avg(m.duracao) as media_duracao 
@@ -88,9 +87,43 @@ select distinct cantor.nome_cantor as cantor, musica.titulo as musica, gravacao.
 -- +-------------+-----------------------------+---------------+
 
 -- Exercicio 6:
-select distinct cantor.nome_cantor, gravacao.data_gravacao as data_ultima_gravacao
-	from cantor natural inner join gravacao
-	order by gravacao.data_gravacao desc;
+-- Query statement:
+select c.nome_cantor, 
+	case 
+		when max(g.data_gravacao) is null then '' 
+		else to_char(max(g.data_gravacao),'DD/MM/YYYY') 
+	end as data_ultima_gravacao
+	from cantor as c
+	left join gravacao as g
+	on c.cod_cantor = g.cod_cantor
+	group by c.nome_cantor
+	order by max(g.data_gravacao) desc;
+-- Query result:
+-- +----------------+----------------------+
+-- | nome_cantor    | data_ultima_gravacao |
+-- +----------------+----------------------+
+-- | The Corrs      |                      |
+-- +----------------+----------------------+
+-- | Legi�o Urbana  | 29/12/2005           |
+-- +----------------+----------------------+
+-- | Coldplay       | 01/10/2004           |
+-- +----------------+----------------------+
+-- | Marisa Monte   | 30/05/2001           |
+-- +----------------+----------------------+
+-- | Laura Pausini  | 10/10/1998           |
+-- +----------------+----------------------+
+-- | Djavan         | 20/01/1995           |
+-- +----------------+----------------------+
+-- | U2             | 25/03/1992           |
+-- +----------------+----------------------+
+-- | Roberto Leal   | 30/07/1988           |
+-- +----------------+----------------------+
+-- | Cazuza         | 06/07/1987           |
+-- +----------------+----------------------+
+-- | Tom Jobim      | 18/04/1981           |
+-- +----------------+----------------------+
+-- | Frank Sinatra  | 29/08/1971           |
+-- +----------------+----------------------+
 
 -- Exercicio 7
 -- Query statement:
