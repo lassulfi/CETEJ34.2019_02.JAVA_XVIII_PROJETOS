@@ -36,10 +36,13 @@ select c.nome_cantor, count(g.cod_cantor) as num_gravadora
 	) as contagem);
 
 -- Exercicio 3	
-select g.cod_cantor, avg(m.duracao) as media_duracao 
-	from gravacao as g, musica as m
-	where g.cod_musica = m.cod_musica
- 	group by g.cod_cantor;
+select max(media.media_duracao) from (
+	select avg(m.duracao) as media_duracao
+	from gravacao as g
+	left join musica as m
+	on g.cod_musica = m.cod_musica
+	group by g.cod_cantor
+) as media;
 
 -- Exercicio 4
 -- Query statement
