@@ -46,15 +46,18 @@ CREATE VIEW maior_departamento AS
 -- Mostre o nome do departamento que tem a
 -- menor quantidade de funcionários sem
 -- dependentes, com a quantidade de funcionários.
--- ESTÁ ERRADO!
-SELECT funcionario.departamento_id, MIN(min_func.qtde_min_func) as qtde_min_func
-	FROM funcionario, min_func
-	NATURAL INNER JOIN min_func 
-	WHERE funcionario.departamento_id IN (
-			SELECT departamento_id, COUNT(departamento_id) as qtde_min_func
-				FROM funcionario 
-				WHERE qtde_dependentes = (SELECT MIN(qtde_dependentes) FROM funcionario)
-				GROUP BY departamento_id) AS min_func;
+CREATE VIEW depto_func_menor_qtde_depend AS
+	SELECT d.nome AS departamento, count(f.codigo) AS funcionarios 
+		FROM departamento AS d, funcionario AS f
+		WHERE f.qtde_dependentes = (
+			SELECT MIN(qtde_min_func) FROM (
+				SELECT COUNT(departamento_id) AS qtde_min_func
+					FROM funcionario 
+					WHERE qtde_dependentes = (SELECT MIN(qtde_dependentes) FROM funcionario)
+					GROUP BY departamento_id) AS min_func_table
+			)
+		AND d.codigo = f.departamento_id
+		GROUP BY d.nome;
 
 -- Mostre o nome do departamento com os
 -- nomes dos seus respectivos funcionários de todos
@@ -76,3 +79,28 @@ CREATE VIEW departamento_maior_salario AS
 		HAVING MAX(f.salario) = (
 			SELECT MAX(salario) FROM funcionario
 		);
+
+-- Mostre o nome do departamento e do
+-- funcionário de cada departamento que tem o cargo
+-- de “Gerente”.
+CREATE VIEW gerentes_departamentos AS
+	SELECT d.nome AS departamento, f.nome as funcionario 
+		FROM departamento as d, funcionario as f
+		WHERE f.cargo LIKE 'gerente'
+		AND d.codigo = f.departamento_id;
+
+-- Crie o usuário “funcionario”, com acesso limitado
+CREATE USER funcionario WITH 
+	LOGIN
+	NOSUPERUSER
+	NOCREATEDB
+	NOCREATEROLE
+	PASSWORD 'Mudar;123';
+
+-- Crie o usuário “gerente”, com acesso completo
+CREATE USER gerente WITH 
+	LOGIN
+	SUPERUSER
+	CREATEDB
+	CREATEROLE
+	PASSWORD 'Mudar;123';

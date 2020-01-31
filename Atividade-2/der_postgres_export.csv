@@ -1,0 +1,9 @@
+"dbms","table_catalog","table_schema","table_name","column_name","ordinal_position","data_type","character_maximum_length","constraint_type","table_schema-2","table_name-2","column_name-2"
+"postgresql","empresas","empresa","departamento","codigo",1,"integer",NULL,"PRIMARY KEY",NULL,NULL,NULL
+"postgresql","empresas","empresa","funcionario","codigo",1,"integer",NULL,"PRIMARY KEY",NULL,NULL,NULL
+"postgresql","empresas","empresa","funcionario","departamento_id",6,"integer",NULL,"FOREIGN KEY","empresa","departamento","codigo"
+"postgresql","empresas","empresa","funcionario","qtde_dependentes",3,"integer",NULL,NULL,NULL,NULL,NULL
+"postgresql","empresas","empresa","funcionario","cargo",5,"character varying",30,NULL,NULL,NULL,NULL
+"postgresql","empresas","empresa","funcionario","salario",4,"numeric",NULL,NULL,NULL,NULL,NULL
+"postgresql","empresas","empresa","departamento","nome",2,"character varying",30,NULL,NULL,NULL,NULL
+"postgresql","empresas","empresa","funcionario","nome",2,"character varying",80,NULL,NULL,NULL,NULL
