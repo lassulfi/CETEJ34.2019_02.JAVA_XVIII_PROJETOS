@@ -1,4 +1,16 @@
-]insert into funcionario (nome, qtde_dependentes, salario, departamento_id, cargo) values ('Mischa Fullerlove', 1, 5503.56, 2, 'operador');
+-- Massa de dados utilizada na atividade 2
+-- @author Luis Daniel Assulfi
+
+-- Massa de dados da tabela de departamentos
+INSERT INTO departamento(nome) VALUES
+    ('vendas'),
+    ('recursos humanos'),
+    ('suporte'),
+    ('diretoria'),
+    ('dirigencia');
+
+-- Massa de dados da tabela funcionarios
+insert into funcionario (nome, qtde_dependentes, salario, departamento_id, cargo) values ('Mischa Fullerlove', 1, 5503.56, 2, 'operador');
 insert into funcionario (nome, qtde_dependentes, salario, departamento_id, cargo) values ('Hyacinthia Lanfere', 0, 5882.21, 2, 'operador');
 insert into funcionario (nome, qtde_dependentes, salario, departamento_id, cargo) values ('Clim Terrelly', 4, 4165.18, 1, 'operador');
 insert into funcionario (nome, qtde_dependentes, salario, departamento_id, cargo) values ('Clay O'' Dornan', 3, 7603.33, 2, 'operador');
@@ -28,3 +40,54 @@ insert into funcionario (nome, qtde_dependentes, salario, departamento_id, cargo
 insert into funcionario (nome, qtde_dependentes, salario, departamento_id, cargo) values ('Piper Rigard', 5, 3857.91, 3, 'gerente');
 insert into funcionario (nome, qtde_dependentes, salario, departamento_id, cargo) values ('Missy Basso', 3, 2142.78, 3, 'diretor');
 insert into funcionario (nome, qtde_dependentes, salario, departamento_id, cargo) values ('Trenton Shuttleworth', 0, 4943.68, 3, 'gerente');
+
+-- Resultados esperados das consultas das views
+
+-- 1 - Mostre o nome do departamento que tem o
+-- maior número de funcionários, mostrando também
+-- a quantidade de funcionários desse departamento.
+-- +------------------+-------------------------+
+-- | nome             | quantidade_funcionarios |
+-- +------------------+-------------------------+
+-- | recursos humanos | 12                      |
+-- +------------------+-------------------------+
+
+-- 2 - Mostre o nome do departamento que tem a
+-- menor quantidade de funcionários sem
+-- dependentes, com a quantidade de funcionários.
+-- +------------------+--------------+
+-- | departamento     | funcionarios |
+-- +------------------+--------------+
+-- | recursos humanos | 3            |
+-- +------------------+--------------+
+-- | vendas           | 3            |
+-- +------------------+--------------+
+
+-- 3 - Mostre o nome do departamento com os
+-- nomes dos seus respectivos funcionários de todos
+-- os departamentos cujo nome começa com “DIR”.
+-- +-------------------+------------------+
+-- | nome_departamento | nome_funcionario |
+-- +-------------------+------------------+
+-- | suporte           | Missy Basso      |
+-- +-------------------+------------------+
+
+-- 4 - Mostre o nome do funcionário e do
+-- departamento ao qual pertence o funcionário com
+-- o maior salário.
+-- +------------------+-------------------+---------+
+-- | departamento     | funcionario       | salario |
+-- +------------------+-------------------+---------+
+-- | recursos humanos | Hattie Bartolomeu | 9837.40 |
+-- +------------------+-------------------+---------+
+
+-- 5 - Mostre o nome do departamento e do
+-- funcionário de cada departamento que tem o cargo
+-- de “Gerente”.
+-- +--------------+----------------------+
+-- | departamento | funcionario          |
+-- +--------------+----------------------+
+-- | suporte      | Piper Rigard         |
+-- +--------------+----------------------+
+-- | suporte      | Trenton Shuttleworth |
+-- +--------------+----------------------+

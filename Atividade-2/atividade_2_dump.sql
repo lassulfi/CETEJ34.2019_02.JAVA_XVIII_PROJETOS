@@ -5,6 +5,8 @@
 -- Dumped from database version 12.1 (Debian 12.1-1.pgdg100+1)
 -- Dumped by pg_dump version 12.1 (Debian 12.1-1.pgdg100+1)
 
+-- @author: Luis Daniel Assulfi
+
 SET statement_timeout = 0;
 SET lock_timeout = 0;
 SET idle_in_transaction_session_timeout = 0;
@@ -106,7 +108,7 @@ CREATE VIEW empresa.departamentos_nome_dir AS
     f.nome AS nome_funcionario
    FROM empresa.departamento d,
     empresa.funcionario f
-  WHERE (((d.nome)::text ~~ 'dir%'::text) AND (d.codigo = f.departamento_id));
+  WHERE (((f.cargo)::text ~~ 'dir%'::text) AND (d.codigo = f.departamento_id));
 
 
 ALTER TABLE empresa.departamentos_nome_dir OWNER TO postgres;
