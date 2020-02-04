@@ -1,3 +1,6 @@
+-- Script para criacao de usuarios
+-- @author: Luis Daniel Assulfi
+
 -- Crie o usuário “funcionario”, com acesso limitado
 CREATE USER funcionario WITH 
 	LOGIN

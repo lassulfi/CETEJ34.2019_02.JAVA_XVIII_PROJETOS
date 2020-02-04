@@ -1,0 +1,57 @@
+CETEJ34 - Sistemas de Banco de Dados
+Nome: Luis Daniel Assulfi
+
+Atividade 3
+
+Questão 1: Explique a diferença entre JPQL e SQL.
+
+A sintaxe da Java Persistence Query language (JPQL) é muito similar a sintaxe SQL. 
+O JPA possuindo uma sintaxe similar ao SQL é uma vantagem importante por ser amplamente 
+utilizada no mercado e pela comunidade de desenvolvedores de software.
+
+A principal diferença entre JPQL e SQL é que a última é utilizada com bancos de dados 
+relacionais, enquanto a primeira trata classes o objetos Java. Por exemplo, uma consulta 
+JPQL pode recuperar e retornar um objeto representado uma entidade ao invés de apenas 
+valores de campos de tabelas de um banco de dados, como ocorre na linguagem SQL. 
+Essa característica torna o JQPL mais próximo a orientação a objetos e mais fácil 
+de ser utilizada com a linguagem de programação Java.
+
+Exemplo de uma query em SQL:
+
+SELECT * FROM contato;
+
+Exemplo da query anterior em JPQL:
+
+SELECT c FROM Contato c;
+
+Questão 2: Qual a função da ferramenta Maven?
+
+Maven é uma ferramenta de automação do processo de build de aplicações, sendo primariamente
+utilizada por projetos em linguagem de programação Java. O Maven também pode ser utilizado 
+para realizar a build e gerenciar projetos escritos em C#, Ruby, Scala e outras linguagens.
+
+O projeto Maven é mantido pela Apache Software Foundation e já foi formalmente parte do 
+projeto Jakarta.
+
+O Maven abrange dois aspectos do desenvolvimento de software: Como o processo de build de
+um software é realizado e o gerenciamento das dependencias de um software.
+
+Através de um arquivo XML, o desenvolvedor pode definir como o procedimento da build de um
+projeto de software, quais são as dependencias com projetos externos e componentes, como
+o processo de build irá ocorrer, quais diretórios serão utilizados e quais os plugins 
+necessários para o projeto.
+
+O projeto Maven possui targets pré-definidos para executar tasks pré-definidas, como por
+exemplo compilação do código e empacotamento.
+
+O Maven também realiza dinamicamente o download de bibliotecas e plugins de um ou mais
+repositórios e armazena essas dependencias em cache localmente, sendo que esses artefatos
+de software também podem ser atualizados com artefatos criados localmente.
+
+Questão 3: Do ponto de vista de banco de dados, para que serve um dialeto?
+
+Um dialeto garante compatibilidade entre diferentes bancos de dados e versões de bancos 
+de dados.
+
+Dialetos toram a aplicação agnostica a linguagem do banco de dados, facilitando o seu
+versionamento e alterações em especificações.
