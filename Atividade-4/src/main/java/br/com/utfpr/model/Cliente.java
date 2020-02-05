@@ -1,11 +1,14 @@
 package br.com.utfpr.model;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 import org.springframework.data.jpa.domain.AbstractPersistable;
 
@@ -26,10 +29,73 @@ public class Cliente extends AbstractPersistable<Long> {
 	private String telefoneFixo;
 	
 	@Column(name = "telefone_celular", length = 11, nullable = false)
-	private String telefoneCelular;	
+	private String telefoneCelular;
 	
-	private List<Pedido> pedidos = new ArrayList<>();
-	
+	@Column(name = "data_nascimento", nullable = false)
+	@Temporal(TemporalType.DATE)
+	private Date dataNascimento;
+		
+	public Cliente() {
+	}
+
+	public Cliente(String nome, String cpf, String rg, String telefoneFixo, String telefoneCelular,
+			Date dataNascimento) {
+		this.nome = nome;
+		this.cpf = cpf;
+		this.rg = rg;
+		this.telefoneFixo = telefoneFixo;
+		this.telefoneCelular = telefoneCelular;
+		this.dataNascimento = dataNascimento;
+	}
+
+	public String getNome() {
+		return nome;
+	}
+
+	public void setNome(String nome) {
+		this.nome = nome;
+	}
+
+	public String getCpf() {
+		return cpf;
+	}
+
+	public void setCpf(String cpf) {
+		this.cpf = cpf;
+	}
+
+	public String getRg() {
+		return rg;
+	}
+
+	public void setRg(String rg) {
+		this.rg = rg;
+	}
+
+	public String getTelefoneFixo() {
+		return telefoneFixo;
+	}
+
+	public void setTelefoneFixo(String telefoneFixo) {
+		this.telefoneFixo = telefoneFixo;
+	}
+
+	public String getTelefoneCelular() {
+		return telefoneCelular;
+	}
+
+	public void setTelefoneCelular(String telefoneCelular) {
+		this.telefoneCelular = telefoneCelular;
+	}
+
+	public Date getDataNascimento() {
+		return dataNascimento;
+	}
+
+	public void setDataNascimento(Date dataNascimento) {
+		this.dataNascimento = dataNascimento;
+	}
+
 	@Override
 	protected void setId(Long id) {
 		super.setId(id);

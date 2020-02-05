@@ -4,6 +4,9 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -30,16 +33,21 @@ public class Pedido extends AbstractPersistable<Long> {
 	@Column(name = "relacao_produtos", length = 500, nullable = false)
 	private String relacaoProdutos;
 	
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "fk_cliente")
+	private Cliente cliente;
+	
 	public Pedido() {
-		super();
 	}
 
-	public Pedido(Date dataPedido, String endereco, Float valorTotal, String descricao, String relacaoProdutos) {
+	public Pedido(Date dataPedido, String endereco, Float valorTotal, 
+			String descricao, String relacaoProdutos, Cliente cliente) {
 		this.dataPedido = dataPedido;
 		this.endereco = endereco;
 		this.valorTotal = valorTotal;
 		this.descricao = descricao;
 		this.relacaoProdutos = relacaoProdutos;
+		this.cliente = cliente;
 	}
 
 	public Date getDataPedido() {
@@ -80,6 +88,14 @@ public class Pedido extends AbstractPersistable<Long> {
 
 	public void setRelacaoProdutos(String relacaoProdutos) {
 		this.relacaoProdutos = relacaoProdutos;
+	}
+
+	public Cliente getCliente() {
+		return cliente;
+	}
+
+	public void setCliente(Cliente cliente) {
+		this.cliente = cliente;
 	}
 
 	@Override
