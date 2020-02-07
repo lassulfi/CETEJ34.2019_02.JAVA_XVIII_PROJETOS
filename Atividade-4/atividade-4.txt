@@ -1,0 +1,14 @@
+Exercícios 04
+Os relacionamentos entre as entidades de um domínio devem ser expressos na modelagem através de vínculos entre classes. Podemos definir quatro tipos de relacionamentos de acordo com a cardinalidade:
+
+- One to One (Um para Um): Por exemplo, um estado é governado por apenas um governador e um governador governa apenas um estado.
+- One to Many (Um para Muitos): Por exemplo, um departamento possui muitos funcionários e um funcionário trabalha em apenas em um departamento.
+- Many to One (Muitos para Um): Por exemplo, um pedido pertence a apenas um cliente e um cliente faz muitos pedidos.
+- Many to Many (Muitos para Muitos): Por exemplo, um livro possui muitos autores e um autor possui muitos livros.
+Observe o código da LISTAGEM 3.1: CLASSE DE ENTIDADE CONTATO que utiliza o relacionamento One to One e realize as seguintes atividades:
+
+1. Pesquisar e descrever resumidamente como implementar os demais tipos de relacionamento (One to Many, Many to One e Many to Many).
+2. Fazer a implementação de um relacionamento One To Many considerando que um Departamento pode conter vários Funcionários (criar os atributos que julgar necessário).
+3. Fazer a implementação de um relacionamento Many to One considerando que muitos Pedidos podem pertencer a um Cliente (novamente, criar os atributos que julgar necessário).
+4. Fazer a implementação de um relacionamento Many to Many considerando que muitos Autores podem escrever muitos Livros (novamente, criar os atributos que julgar necessário).
+5. Pesquisar e descrever resumidamente como utilizar relacionamentos bidirecionais.
