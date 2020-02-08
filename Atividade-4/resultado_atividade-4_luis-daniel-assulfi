@@ -1,0 +1,584 @@
+Nome: Luis Daniel Assulfi
+
+CETEJ34 - Sistemas de Banco de Dados
+
+Atividade 4
+
+1. Pesquisar e descrever resumidamente como implementar os demais tipos de relacionamento (One to Many, Many to One e Many to Many).
+
+	Implementação de um relacionamento One To Many
+	
+	Por definição um relacionamento um-para-muitos significa que uma linha de uma tabela é mapeada por muitas linhas em uma outra tabela.
+	Em Java, o mapeamento um-para-muitos é feito através da anotação @OneToMany, do pacote javax.persitance.
+	
+	Como exemplo temos a classe Carrinho de um site de compras. Temos que o carrinho é composto por vários items, logo, podemos mapear esse relacionamento da seguinte forma:
+	
+	public class Carrinho {
+ 
+	    //...     
+	  
+	    @OneToMany(mappedBy="carrinho")
+	    private Set<Items> items;
+	     
+	    //...
+	}	
+	
+	Implementação de um relacionamento Many To One
+	
+	Um relacionamento muitos-para-um é similar ao mapeamento um-para-muitos. Este caso representa que, muitas entidades são mapeadas por uma única linha. Um exemplo de implementação desse relacionamento é dado abaixo:
+	
+	@ManyToOne
+	@JoinColumn(name = "publicador_id")
+	public Publicador getPublicador() {
+	         return publicador;
+	}
+	
+	Implementação de um Relacionamento Many To Many
+	
+	Um relacionamento muitos para muitos representa uma situação onde multiplas entidades se relacionam por um campo em comum entre elas.O exemplo abaixo demostra como essa implementação é feita em Java.
+	
+	ManyToMany(cascade = ALL)
+	public Set<Autor> getAutores() {
+	    return autores;
+	}
+
+2. Fazer a implementação de um relacionamento One To Many considerando que um Departamento pode conter vários Funcionários (criar os atributos que julgar necessário).
+
+	Implementação da classe Departamento:
+	
+	package br.com.utfpr.model;
+
+	import java.util.ArrayList;
+	import java.util.List;
+	
+	import javax.persistence.CascadeType;
+	import javax.persistence.Column;
+	import javax.persistence.Entity;
+	import javax.persistence.JoinColumn;
+	import javax.persistence.OneToMany;
+	import javax.persistence.Table;
+	
+	import org.springframework.data.jpa.domain.AbstractPersistable;
+	
+	@Entity
+	@Table(name = "departamento")
+	public class Deparamento extends AbstractPersistable<Long> {	
+		
+		@Column(name = "nome", length = 30, nullable = false)
+		private String nome;
+		
+		@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+		@JoinColumn(name = "departamento_id")
+		private List<Funcionario> funcionarios = new ArrayList<>();
+	
+		public Deparamento(String nome) {
+			super();
+			this.nome = nome;
+		}
+	
+		public String getNome() {
+			return nome;
+		}
+	
+		public void setNome(String nome) {
+			this.nome = nome;
+		}
+	
+		public List<Funcionario> getFuncionarios() {
+			return funcionarios;
+		}
+	
+		public void setFuncionarios(List<Funcionario> funcionarios) {
+			this.funcionarios = funcionarios;
+		}
+	
+		@Override
+		protected void setId(Long id) {
+			super.setId(id);
+		}	
+	}
+	
+	Implemetação da classe Funcionário:
+	
+	package br.com.utfpr.model;
+
+	import java.util.Date;
+	
+	import javax.persistence.Column;
+	import javax.persistence.Entity;
+	import javax.persistence.Table;
+	import javax.persistence.Temporal;
+	import javax.persistence.TemporalType;
+	
+	import org.springframework.data.jpa.domain.AbstractPersistable;
+	
+	@Entity
+	@Table(name = "funcionario")
+	public class Funcionario extends AbstractPersistable<Long> {
+	
+		@Column(name = "nome", length = 80, nullable = false)
+		private String nome;
+		
+		@Column(name = "cpf", length = 11, nullable = false)
+		private String cpf;
+		
+		@Column(name = "rg", length = 9, nullable = false)
+		private String rg;
+		
+		@Column(name="data_nascimento", nullable = false)
+		@Temporal(TemporalType.DATE)
+		private Date dataNascimento;
+		
+		@Column(name = "salario", nullable = false)
+		private Float salario;
+		
+		@Column(name = "quantidade_dependentes", nullable = false)
+		private Integer quantidadeDependentes;
+		
+		public Funcionario() {
+		}
+	
+		public Funcionario(String nome, String cpf, String rg, Date dataNascimento, Float salario,
+				Integer quantidadeDependentes) {
+			this.nome = nome;
+			this.cpf = cpf;
+			this.rg = rg;
+			this.dataNascimento = dataNascimento;
+			this.salario = salario;
+			this.quantidadeDependentes = quantidadeDependentes;
+		}
+	
+		public String getNome() {
+			return nome;
+		}
+	
+		public void setNome(String nome) {
+			this.nome = nome;
+		}
+	
+		public String getCpf() {
+			return cpf;
+		}
+	
+		public void setCpf(String cpf) {
+			this.cpf = cpf;
+		}
+	
+		public String getRg() {
+			return rg;
+		}
+	
+		public void setRg(String rg) {
+			this.rg = rg;
+		}
+	
+		public Date getDataNascimento() {
+			return dataNascimento;
+		}
+	
+		public void setDataNascimento(Date dataNascimento) {
+			this.dataNascimento = dataNascimento;
+		}
+	
+		public Float getSalario() {
+			return salario;
+		}
+	
+		public void setSalario(Float salario) {
+			this.salario = salario;
+		}
+	
+		public Integer getQuantidadeDependentes() {
+			return quantidadeDependentes;
+		}
+	
+		public void setQuantidadeDependentes(Integer quantidadeDependentes) {
+			this.quantidadeDependentes = quantidadeDependentes;
+		}
+		
+		@Override
+		protected void setId(Long id) {
+			super.setId(id);
+		}	
+	}
+
+3. Fazer a implementação de um relacionamento Many to One considerando que muitos Pedidos podem pertencer a um Cliente (novamente, criar os atributos que julgar necessário).	
+
+	Implementação da classe Pedido:
+	
+	package br.com.utfpr.model;
+
+	import java.util.Date;
+	
+	import javax.persistence.Column;
+	import javax.persistence.Entity;
+	import javax.persistence.FetchType;
+	import javax.persistence.JoinColumn;
+	import javax.persistence.ManyToOne;
+	import javax.persistence.Table;
+	import javax.persistence.Temporal;
+	import javax.persistence.TemporalType;
+	
+	import org.springframework.data.jpa.domain.AbstractPersistable;
+	
+	@Entity
+	@Table(name = "pedido")
+	public class Pedido extends AbstractPersistable<Long> {
+	
+		@Column(name = "data_pedido", nullable = false)
+		@Temporal(TemporalType.DATE)
+		private Date dataPedido;
+		
+		@Column(name = "endereco", length = 300, nullable = false)
+		private String endereco;
+		
+		@Column(name = "valor_total", nullable = false)
+		private Float valorTotal;
+		
+		@Column(name = "descricao", length = 300, nullable = false)
+		private String descricao;
+		
+		@Column(name = "relacao_produtos", length = 500, nullable = false)
+		private String relacaoProdutos;
+		
+		@ManyToOne(fetch = FetchType.LAZY)
+		@JoinColumn(name = "fk_cliente")
+		private Cliente cliente;
+		
+		public Pedido() {
+		}
+	
+		public Pedido(Date dataPedido, String endereco, Float valorTotal, 
+				String descricao, String relacaoProdutos, Cliente cliente) {
+			this.dataPedido = dataPedido;
+			this.endereco = endereco;
+			this.valorTotal = valorTotal;
+			this.descricao = descricao;
+			this.relacaoProdutos = relacaoProdutos;
+			this.cliente = cliente;
+		}
+	
+		public Date getDataPedido() {
+			return dataPedido;
+		}
+	
+		public void setDataPedido(Date dataPedido) {
+			this.dataPedido = dataPedido;
+		}
+	
+		public String getEndereco() {
+			return endereco;
+		}
+	
+		public void setEndereco(String endereco) {
+			this.endereco = endereco;
+		}
+	
+		public Float getValorTotal() {
+			return valorTotal;
+		}
+	
+		public void setValorTotal(Float valorTotal) {
+			this.valorTotal = valorTotal;
+		}
+	
+		public String getDescricao() {
+			return descricao;
+		}
+	
+		public void setDescricao(String descricao) {
+			this.descricao = descricao;
+		}
+	
+		public String getRelacaoProdutos() {
+			return relacaoProdutos;
+		}
+	
+		public void setRelacaoProdutos(String relacaoProdutos) {
+			this.relacaoProdutos = relacaoProdutos;
+		}
+	
+		public Cliente getCliente() {
+			return cliente;
+		}
+	
+		public void setCliente(Cliente cliente) {
+			this.cliente = cliente;
+		}
+	
+		@Override
+		protected void setId(Long id) {
+			super.setId(id);
+		}	
+	}
+	
+	Implementação da classe Cliente:
+	
+	package br.com.utfpr.model;
+
+	import java.util.Date;
+	
+	import javax.persistence.Column;
+	import javax.persistence.Entity;
+	import javax.persistence.Table;
+	import javax.persistence.Temporal;
+	import javax.persistence.TemporalType;
+	
+	import org.springframework.data.jpa.domain.AbstractPersistable;
+	
+	@Entity
+	@Table(name = "cliente")
+	public class Cliente extends AbstractPersistable<Long> {
+	
+		@Column(name = "nome", length = 150, nullable = false)
+		private String nome;
+		
+		@Column(name = "cpf", length = 11, nullable = false)
+		private String cpf;
+		
+		@Column(name = "rg", length = 9, nullable = false)
+		private String rg;
+		
+		@Column(name = "telefone_fixo", length = 10, nullable = false)
+		private String telefoneFixo;
+		
+		@Column(name = "telefone_celular", length = 11, nullable = false)
+		private String telefoneCelular;
+		
+		@Column(name = "data_nascimento", nullable = false)
+		@Temporal(TemporalType.DATE)
+		private Date dataNascimento;
+			
+		public Cliente() {
+		}
+	
+		public Cliente(String nome, String cpf, String rg, String telefoneFixo, String telefoneCelular,
+				Date dataNascimento) {
+			this.nome = nome;
+			this.cpf = cpf;
+			this.rg = rg;
+			this.telefoneFixo = telefoneFixo;
+			this.telefoneCelular = telefoneCelular;
+			this.dataNascimento = dataNascimento;
+		}
+	
+		public String getNome() {
+			return nome;
+		}
+	
+		public void setNome(String nome) {
+			this.nome = nome;
+		}
+	
+		public String getCpf() {
+			return cpf;
+		}
+	
+		public void setCpf(String cpf) {
+			this.cpf = cpf;
+		}
+	
+		public String getRg() {
+			return rg;
+		}
+	
+		public void setRg(String rg) {
+			this.rg = rg;
+		}
+	
+		public String getTelefoneFixo() {
+			return telefoneFixo;
+		}
+	
+		public void setTelefoneFixo(String telefoneFixo) {
+			this.telefoneFixo = telefoneFixo;
+		}
+	
+		public String getTelefoneCelular() {
+			return telefoneCelular;
+		}
+	
+		public void setTelefoneCelular(String telefoneCelular) {
+			this.telefoneCelular = telefoneCelular;
+		}
+	
+		public Date getDataNascimento() {
+			return dataNascimento;
+		}
+	
+		public void setDataNascimento(Date dataNascimento) {
+			this.dataNascimento = dataNascimento;
+		}
+	
+		@Override
+		protected void setId(Long id) {
+			super.setId(id);
+		}	
+	}
+
+4. Fazer a implementação de um relacionamento Many to Many considerando que muitos Autores podem escrever muitos Livros (novamente, criar os atributos que julgar necessário).
+
+	Implementação da classe Autor:
+	
+	package br.com.utfpr.model;
+
+	import java.util.ArrayList;
+	import java.util.Date;
+	import java.util.List;
+	
+	import javax.persistence.Column;
+	import javax.persistence.Entity;
+	import javax.persistence.ManyToMany;
+	import javax.persistence.Table;
+	import javax.persistence.Temporal;
+	import javax.persistence.TemporalType;
+	
+	import org.springframework.data.jpa.domain.AbstractPersistable;
+	
+	@Entity
+	@Table(name = "autor")
+	public class Autor  extends AbstractPersistable<Long> {
+	
+		@Column(name = "nome", length = 100, nullable = false)
+		private String nome;
+		
+		@Column(name = "data_nascimento", nullable = false)
+		@Temporal(TemporalType.DATE)
+		private Date dataNascimento;
+		
+		@ManyToMany(mappedBy = "autores")
+		private List<Livro> livros = new ArrayList<>();
+	
+		public Autor(String nome, Date dataNascimento) {
+			this.nome = nome;
+			this.dataNascimento = dataNascimento;
+		}
+	
+		public String getNome() {
+			return nome;
+		}
+	
+		public void setNome(String nome) {
+			this.nome = nome;
+		}
+	
+		public Date getDataNascimento() {
+			return dataNascimento;
+		}
+	
+		public void setDataNascimento(Date dataNascimento) {
+			this.dataNascimento = dataNascimento;
+		}
+	
+		public List<Livro> getLivros() {
+			return livros;
+		}
+	
+		public void setLivros(List<Livro> livros) {
+			this.livros = livros;
+		}
+	
+		@Override
+		protected void setId(Long id) {
+			super.setId(id);
+		}
+	}
+	
+	Implementação da classe Livro:
+	
+	package br.com.utfpr.model;
+
+	import java.util.ArrayList;
+	import java.util.Date;
+	import java.util.List;
+	
+	import javax.persistence.Column;
+	import javax.persistence.Entity;
+	import javax.persistence.JoinColumn;
+	import javax.persistence.JoinTable;
+	import javax.persistence.ManyToMany;
+	import javax.persistence.Table;
+	import javax.persistence.Temporal;
+	import javax.persistence.TemporalType;
+	
+	import org.springframework.data.jpa.domain.AbstractPersistable;
+	
+	@Entity
+	@Table(name = "livro")
+	public class Livro extends AbstractPersistable<Long> {
+	
+		@Column(name = "titulo", length = 255, nullable = false)
+		private String titulo;
+		
+		@Column(name = "data_lancamento", nullable = false)
+		@Temporal(TemporalType.DATE)
+		private Date dataLancamento;
+		
+		@Column(name = "isbn", length = 13, nullable = false)
+		private String isbn;
+		
+		@ManyToMany
+		@JoinTable(name = "autor_livro", 
+		joinColumns = @JoinColumn(name = "livro_id"),
+		inverseJoinColumns = @JoinColumn(name = "autor_id"))
+		private List<Autor> autores = new ArrayList<>();
+	
+		public Livro() {
+		}
+	
+		public Livro(String titulo, Date dataLancamento, String isbn) {
+			super();
+			this.titulo = titulo;
+			this.dataLancamento = dataLancamento;
+			this.isbn = isbn;
+		}
+	
+		public String getTitulo() {
+			return titulo;
+		}
+	
+		public void setTitulo(String titulo) {
+			this.titulo = titulo;
+		}
+	
+		public Date getDataLancamento() {
+			return dataLancamento;
+		}
+	
+		public void setDataLancamento(Date dataLancamento) {
+			this.dataLancamento = dataLancamento;
+		}
+	
+		public String getIsbn() {
+			return isbn;
+		}
+	
+		public void setIsbn(String isbn) {
+			this.isbn = isbn;
+		}
+	
+		public List<Autor> getAutores() {
+			return autores;
+		}
+	
+		public void setAutores(List<Autor> autores) {
+			this.autores = autores;
+		}
+	
+		@Override
+		protected void setId(Long id) {
+			super.setId(id);
+		}
+	}
+
+5. Pesquisar e descrever resumidamente como utilizar relacionamentos bidirecionais.
+
+	Em um relacionamento bidirecional, cada entidade possui um campo de relacionamento ou propriedade que se refere a uma outra entidade. Através desse campo de relacionamento ou propriedade, uma entidade de classe de código pode acessar o objeto no qual se relaciona. Se uma entidade possui um campo no qual ela pode se relacionar, a entidade é tida como conhecida pelo objeto no qual se relaciona.
+	
+	Um relacionamento bidirecional deve seguir as seguintes regras:
+	
+	- O lado inverso de um relacionamento bidirecional deve se refeir ao lado que pertence usando o elmento mappedBy das anotações @OneToOne, @OneToMany e @ManyToMany. O elemento mappedBy designa a propriedade ou campo na entidade no qual o seu proprietário se relaciona.
+	- O lado "muitos" de um relacionamento bidirecional muitos para um não deve definir um elemento como mappedBy. O lado "muitos" é sempre o lado que pertence o relacionamento.
+	- Para um relacionamento bidirecional um para um, o lado que pertence o relacionamento corresponde ao lado que contém a chave estrangeira correspondente.
+	- Para um relacionamento muitos para muitos, ambos os lados devem pertencer o relacionamento.
+	
