@@ -1,0 +1,7 @@
+Exercícios 05
+Criar um projeto Java Application (with Maven) a partir dos códigos apresentados nos tópicos:
+
+Configuração do Spring Data JPA; 
+Lidando com Entidades; e 
+Repositórios.
+Preferencialmente, utilizar a IDE Apache NetBeans, o servidor web Apache Tomcat® e o Banco de Dados MySql Community.
