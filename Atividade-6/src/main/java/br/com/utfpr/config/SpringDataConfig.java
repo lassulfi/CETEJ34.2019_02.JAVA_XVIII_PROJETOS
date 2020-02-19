@@ -27,7 +27,7 @@ public class SpringDataConfig {
 		ds.setUser("root");
 		ds.setPassword("root");
 		ds.setJdbcUrl("jdbc:mysql://localhost:3306/curso-spring-db?useTimezone=true&serverTimezone=UTC");
-		ds.setDriverClass("com.mysql.jdbc.Driver");
+		ds.setDriverClass("com.mysql.cj.jdbc.Driver");
 		
 		return ds;
 	}

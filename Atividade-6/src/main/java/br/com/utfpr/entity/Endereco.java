@@ -4,6 +4,8 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Table;
 
 import org.springframework.data.jpa.domain.AbstractPersistable;
@@ -28,6 +30,15 @@ public class Endereco extends AbstractPersistable<Long> {
 	
 	@Column(name = "estado", length = 2, nullable = false)
 	private String estado;
+	
+	public Endereco() {};
+
+	public Endereco(TipoEndereco tipoEndereco, String logradouro, String cidade, String estado) {
+		this.tipoEndereco = tipoEndereco;
+		this.logradouro = logradouro;
+		this.cidade = cidade;
+		this.estado = estado;
+	}
 
 	public TipoEndereco getTipoEndereco() {
 		return tipoEndereco;
