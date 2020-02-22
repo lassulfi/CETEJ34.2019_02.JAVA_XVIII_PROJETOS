@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import br.com.utfpr.entity.Contato;
@@ -42,4 +43,7 @@ public interface ContatoRepository extends JpaRepository<Contato, Long> {
 	SemEndereco findContatoByNome(String nome);
 	
 	NomeCidade findContatoCidadeByNome(String nome);
+	
+	@Query("SELECT c FROM Contato c WHERE idade >= :idade OR nome LIKE :nome")
+	List<Contato> findByIdadeOuNome(@Param("idade") Integer idade, @Param("nome") String nome);
 }
