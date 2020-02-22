@@ -6,6 +6,8 @@ import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
+import javax.persistence.NamedNativeQuery;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -15,6 +17,13 @@ import org.springframework.data.jpa.domain.AbstractPersistable;
 
 @Entity
 @Table(name = "CONTATOS")
+@NamedQuery(
+	name = "Contato.byIdade",
+	query = "FROM Contato c WHERE c.idade = ?1")
+@NamedNativeQuery(
+	name = "Contato.byNome",
+	query = "SELECT * FROM CONTATOS WHERE nome LIKE ?1",
+	resultClass = Contato.class)
 public class Contato extends AbstractPersistable<Long> {
 
 	@Column(name = "nome", length = 64, nullable = false)
@@ -30,6 +39,16 @@ public class Contato extends AbstractPersistable<Long> {
 	@OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "endereco_id", nullable = false)
 	private Endereco endereco;
+	
+	public Contato() {}
+	
+	public Contato(String nome, Integer idade, Date dtCadastro, Endereco endereco) {
+		super();
+		this.nome = nome;
+		this.idade = idade;
+		this.dtCadastro = dtCadastro;
+		this.endereco = endereco;
+	}
 
 	public String getNome() {
 		return nome;
@@ -66,5 +85,5 @@ public class Contato extends AbstractPersistable<Long> {
 	@Override
 	protected void setId(Long id) {
 		super.setId(id);
-	}
+	}	
 }

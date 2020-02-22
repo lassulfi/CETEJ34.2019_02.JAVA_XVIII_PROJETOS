@@ -28,6 +28,15 @@ public class Endereco extends AbstractPersistable<Long> {
 	
 	@Column(name = "estado", length = 2, nullable = false)
 	private String estado;
+	
+	public Endereco() {};
+
+	public Endereco(TipoEndereco tipoEndereco, String logradouro, String cidade, String estado) {
+		this.tipoEndereco = tipoEndereco;
+		this.logradouro = logradouro;
+		this.cidade = cidade;
+		this.estado = estado;
+	}
 
 	public TipoEndereco getTipoEndereco() {
 		return tipoEndereco;
