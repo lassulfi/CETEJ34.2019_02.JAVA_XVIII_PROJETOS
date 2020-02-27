@@ -44,6 +44,9 @@ public interface ContatoRepository extends JpaRepository<Contato, Long> {
 	
 	NomeCidade findContatoCidadeByNome(String nome);
 	
+//	@Query("SELECT c FROM Contato c WHERE idade >= ?1 OR nome LIKE ?2")
+//	List<Contato> findByIdadeOuNome(Integer idade, String nome);
+	
 	@Query("SELECT c FROM Contato c WHERE idade >= :idade OR nome LIKE :nome")
 	List<Contato> findByIdadeOuNome(@Param("idade") Integer idade, @Param("nome") String nome);
 }
