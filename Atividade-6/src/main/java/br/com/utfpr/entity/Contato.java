@@ -37,13 +37,12 @@ public class Contato extends AbstractPersistable<Long> {
 	private Date dtCadastro;
 	
 	@OneToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name = "endereco_id", nullable = false)
+	@JoinColumn(name = "endereco_id", nullable = false, referencedColumnName = "id")
 	private Endereco endereco;
 	
 	public Contato() {}
 	
 	public Contato(String nome, Integer idade, Date dtCadastro, Endereco endereco) {
-		super();
 		this.nome = nome;
 		this.idade = idade;
 		this.dtCadastro = dtCadastro;
@@ -85,5 +84,15 @@ public class Contato extends AbstractPersistable<Long> {
 	@Override
 	protected void setId(Long id) {
 		super.setId(id);
+	}
+
+	@Override
+	public String toString() {
+		return "Contato: nome = " + nome 
+				+ ", idade =  " + idade 
+				+ ", data de cadastro = " + dtCadastro
+				+ "\n\t Endereço: " + endereco;
 	}	
+	
+	
 }

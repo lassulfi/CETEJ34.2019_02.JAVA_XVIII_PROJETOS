@@ -6,6 +6,6 @@ public interface NomeCidade {
 
 	String getNome();
 	
-	@Value("#{(target.endereco.cidade})")
+	@Value("#{(target.endereco.cidade)}")
 	String getCidade();
 }

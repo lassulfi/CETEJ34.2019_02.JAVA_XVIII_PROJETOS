@@ -4,6 +4,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import org.springframework.data.jpa.domain.AbstractPersistable;
@@ -28,6 +29,9 @@ public class Endereco extends AbstractPersistable<Long> {
 	
 	@Column(name = "estado", length = 2, nullable = false)
 	private String estado;
+	
+	@OneToOne(mappedBy = "endereco")
+	private Contato contato;
 	
 	public Endereco() {};
 
@@ -70,8 +74,24 @@ public class Endereco extends AbstractPersistable<Long> {
 		this.estado = estado;
 	}
 
+	public Contato getContato() {
+		return contato;
+	}
+
+	public void setContato(Contato contato) {
+		this.contato = contato;
+	}
+
 	@Override
 	protected void setId(Long id) {
 		super.setId(id);
 	}
+
+	@Override
+	public String toString() {
+		return "Endereco:  tipo de endereço = " + tipoEndereco.toString() 
+				+ ", logradouro = " + logradouro 
+				+ ", cidade = " + cidade
+				+ ", estado = " + estado;
+	}	
 }

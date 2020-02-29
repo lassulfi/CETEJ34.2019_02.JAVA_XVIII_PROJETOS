@@ -86,4 +86,12 @@ public class Contato extends AbstractPersistable<Long> {
 	protected void setId(Long id) {
 		super.setId(id);
 	}	
+	
+	@Override
+	public String toString() {
+		return "Contato: nome = " + nome 
+				+ ", idade =  " + idade 
+				+ ", data de cadastro = " + dtCadastro
+				+ "\n\t Endereço: " + endereco;
+	}
 }

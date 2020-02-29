@@ -26,7 +26,7 @@ public class SpringDataConfig {
 		BoneCPDataSource ds = new BoneCPDataSource();
 		ds.setUser("root");
 		ds.setPassword("root");
-		ds.setJdbcUrl("jdbc:mysql://localhost:3306/curso-spring-db?useTimezone=true&serverTimezone=UTC");
+		ds.setJdbcUrl("jdbc:mysql://localhost:3306/curso-spring-db");
 		ds.setDriverClass("com.mysql.jdbc.Driver");
 		
 		return ds;
@@ -41,7 +41,7 @@ public class SpringDataConfig {
 		
 		HibernateJpaVendorAdapter vendorAdapter = 
 				new HibernateJpaVendorAdapter();
-		vendorAdapter.setGenerateDdl(false);
+		vendorAdapter.setGenerateDdl(true);
 		vendorAdapter.setShowSql(true);
 		
 		factory.setDataSource(datasource());

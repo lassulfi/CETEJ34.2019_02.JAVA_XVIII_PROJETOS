@@ -27,7 +27,7 @@ public class SpringDataConfig {
 		BoneCPDataSource ds = new BoneCPDataSource();
 		ds.setUser("root");
 		ds.setPassword("root");
-		ds.setJdbcUrl("jdbc:mysql://localhost:3306/curso-spring-db?useTimezone=true&serverTimezone=UTC");
+		ds.setJdbcUrl("jdbc:mysql://localhost:3306/curso-spring-db");
 		ds.setDriverClass("com.mysql.cj.jdbc.Driver");
 		
 		return ds;
