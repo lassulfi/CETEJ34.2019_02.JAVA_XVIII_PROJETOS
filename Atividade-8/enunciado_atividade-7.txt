@@ -1,5 +1,0 @@
-Exercícios 07
-Acrescentar no projeto Java Application (with Maven) o código apresentado nos tópico:
-
-Repositórios (Parte 3).
-Preferencialmente, utilizar a IDE Apache NetBeans, o servidor web Apache Tomcat® e o Banco de Dados MySql Community.

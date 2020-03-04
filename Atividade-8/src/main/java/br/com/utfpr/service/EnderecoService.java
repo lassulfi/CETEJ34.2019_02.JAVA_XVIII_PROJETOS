@@ -18,8 +18,9 @@ public class EnderecoService {
 	private ContatoRepository contatoRepository;
 	
 	public void salvar(Endereco endereco, Contato contato) {
-		enderecoRepository.save(endereco);
 		contato.setEndereco(endereco);
 		contatoRepository.save(contato);
+		endereco.setContato(contato);
+		enderecoRepository.save(endereco);
 	}
 }

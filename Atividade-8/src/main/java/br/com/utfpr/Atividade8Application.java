@@ -34,11 +34,11 @@ public class Atividade8Application implements CommandLineRunner {
 				
 		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");		
 		
-		Contato contato1 = new Contato("Ana da Silva", 30, formatter.parse("2013-10-05"), endereco1);
-		Contato contato2 = new Contato("Eduardo Coelho", 25, formatter.parse("2013-11-14"), endereco2);
-		Contato contato3 = new Contato("Juliana Boemo", 39, formatter.parse("2014-04-21"), endereco3);
-		Contato contato4 = new Contato("Aniele Vicentini da Silva", 23, formatter.parse("2014-08-18"), endereco4);
-		
+		Contato contato1 = new Contato("Ana da Silva", 30, formatter.parse("2013-10-05"));
+		Contato contato2 = new Contato("Eduardo Coelho", 25, formatter.parse("2013-11-14"));
+		Contato contato3 = new Contato("Juliana Boemo", 39, formatter.parse("2014-04-21"));
+		Contato contato4 = new Contato("Aniele Vicentini da Silva", 23, formatter.parse("2014-08-18"));
+				
 		// Consultas da Atividade 8
 		// Salva um endereco usando a classe EnderecoService
 		this.enderecoService.salvar(endereco1, contato1);

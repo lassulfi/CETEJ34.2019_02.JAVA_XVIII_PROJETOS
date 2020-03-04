@@ -42,8 +42,13 @@ public class Contato extends AbstractPersistable<Long> {
 	
 	public Contato() {}
 	
+	public Contato(String nome, Integer idade, Date dtCadastro) {
+		this.nome = nome;
+		this.idade = idade;
+		this.dtCadastro = dtCadastro;
+	}
+	
 	public Contato(String nome, Integer idade, Date dtCadastro, Endereco endereco) {
-		super();
 		this.nome = nome;
 		this.idade = idade;
 		this.dtCadastro = dtCadastro;
